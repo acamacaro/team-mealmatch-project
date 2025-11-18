@@ -1,1 +1,2 @@
 echo "My name is david"
+echo "My favorite color is Forest Green"
