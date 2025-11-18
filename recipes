@@ -1,0 +1,40 @@
+# Expanded Recipe Finder
+
+recipes = {
+    # Original recipes
+    "Pancakes": {"flour", "milk", "eggs"},
+    "Scrambled Eggs": {"eggs", "butter", "salt"},
+    "Grilled Cheese": {"bread", "cheese", "butter"},
+    "Tomato Pasta": {"pasta", "tomato sauce", "salt"},
+    "Salad": {"lettuce", "tomato", "cucumber"},
+
+    # New recipes
+    "Omelette": {"eggs", "cheese", "salt", "pepper"},
+    "French Toast": {"bread", "eggs", "milk", "cinnamon"},
+    "Chicken Soup": {"chicken", "carrots", "celery", "salt"},
+    "Fruit Smoothie": {"banana", "strawberry", "milk"},
+    "Tuna Sandwich": {"bread", "tuna", "mayonnaise"},
+    "Garlic Bread": {"bread", "butter", "garlic"},
+    "Quesadilla": {"tortilla", "cheese", "butter"},
+    "Veggie Stir Fry": {"carrot", "broccoli", "soy sauce", "oil"},
+    "Chocolate Cake": {"flour", "sugar", "eggs", "cocoa powder", "butter"},
+    "Pizza": {"dough", "cheese", "tomato sauce"},
+}
+
+# Ask the user for ingredients
+user_input = input("Enter your ingredients (comma separated): ")
+
+# Convert input to a set of ingredients
+ingredients = {item.strip().lower() for item in user_input.split(",")}
+
+print("\nRecipes you can make:")
+found = False
+
+for recipe, required in recipes.items():
+    # If user has ALL required ingredients
+    if required.issubset(ingredients):
+        print(f"✔ {recipe}")
+        found = True
+
+if not found:
+    print("❌ No exact matches, try adding more ingredients or expanding your list!")
