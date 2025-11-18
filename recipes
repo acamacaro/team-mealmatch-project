@@ -37,4 +37,4 @@ for recipe, required in recipes.items():
         found = True
 
 if not found:
-    print("❌ No exact matches, try adding more ingredients or expanding your list!")
+    print(" No exact matches, try adding more ingredients or expanding your list!")
