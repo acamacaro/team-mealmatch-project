@@ -1,0 +1,108 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f7f7f7;
+}
+
+header {
+  background: #ff8a5c;
+  color: white;
+  padding: 1rem 2rem;
+}
+
+main {
+  padding: 1rem 2rem;
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+section {
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+  flex: 1 1 300px;
+}
+
+h2 {
+  margin-top: 0;
+}
+
+.recipe-card {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.recipe-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.favorite-button {
+  border: none;
+  background: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.favorite-button.favorited {
+  color: #ffb100;
+  font-weight: bold;
+}
+
+#ingredient-input-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+#ingredient-input {
+  flex: 1;
+  padding: 0.4rem 0.5rem;
+}
+
+#my-ingredients-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+#my-ingredients-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.25rem 0;
+  border-bottom: 1px solid #eee;
+  font-size: 0.95rem;
+}
+
+.remove-ingredient-button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.remove-ingredient-button:hover {
+  color: #ff8a5c;
+}
+
+.shopping-button {
+  margin-top: 0.5rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background: #fff;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.shopping-button:hover {
+  border-color: #ff8a5c;
+}

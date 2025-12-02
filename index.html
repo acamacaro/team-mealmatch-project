@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>MealMatch</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>MealMatch</h1>
+      <p>Find recipes and save your favorites</p>
+    </header>
+
+    <main>
+      <section>
+        <h2>My Ingredients</h2>
+        <div id="ingredient-input-row">
+          <input
+            id="ingredient-input"
+            type="text"
+            placeholder="Type an ingredient you have (e.g., chicken)"
+          />
+          <button id="add-ingredient-button">Add</button>
+        </div>
+        <ul id="my-ingredients-list"></ul>
+      </section>
+
+      <section>
+        <h2>All Recipes</h2>
+        <div id="recipes-list"></div>
+      </section>
+
+      <section>
+        <h2>Favorite Recipes</h2>
+        <p id="favorites-empty-message">
+          No favorites yet. Click a star to save one!
+        </p>
+        <div id="favorites-list"></div>
+      </section>
+
+      <section>
+        <h2>Shopping List</h2>
+        <p id="shopping-list-message">
+          Select a recipe to see which ingredients you're missing.
+        </p>
+        <ul id="shopping-list-items"></ul>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
