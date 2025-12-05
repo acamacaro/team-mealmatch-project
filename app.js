@@ -40,84 +40,60 @@ const recipes = [
   {
     id: 4,
     name: "Lo Mein",
-    description: "Stir-fried noodles with vegetables and soy sauce.",
-    ingredients: ["lo mein noodles", "carrot", "bell pepper", "soy sauce", "oil"],
+    description: "Soft noodles stir-fried with veggies and soy sauce.",
+    ingredients: ["noodles", "carrot", "cabbage", "soy sauce", "oil"],
     steps: [
       "Cook noodles according to package instructions.",
-      "Stir-fry vegetables in oil for 3–4 minutes.",
-      "Add noodles and soy sauce, toss to combine."
+      "Stir-fry vegetables in oil for 5 minutes.",
+      "Add noodles and soy sauce, stir to combine."
     ],
-    tags: ["vegetarian", "quick"]
+    tags: ["vegetarian"]
   },
   {
     id: 5,
     name: "Chia Pudding",
-    description: "Healthy chia seed pudding with almond milk.",
-    ingredients: ["chia seeds", "almond milk", "honey", "vanilla extract"],
+    description: "Healthy pudding made from chia seeds and milk.",
+    ingredients: ["chia seeds", "milk", "honey", "vanilla"],
     steps: [
-      "Mix chia seeds, almond milk, honey, and vanilla in a bowl.",
-      "Refrigerate overnight.",
-      "Serve chilled with fruit."
+      "Mix chia seeds with milk and sweetener.",
+      "Refrigerate for at least 2 hours or overnight.",
+      "Serve chilled with toppings."
     ],
-    tags: ["vegan", "gluten-free", "healthy"]
+    tags: ["vegan", "gluten-free"]
   },
   {
     id: 6,
     name: "Cheese Enchiladas",
-    description: "Baked tortillas stuffed with cheese and sauce.",
-    ingredients: ["tortillas", "cheese", "enchilada sauce", "onion"],
+    description: "Corn tortillas filled with cheese and baked in sauce.",
+    ingredients: ["corn tortillas", "cheese", "enchilada sauce"],
     steps: [
-      "Preheat oven to 375°F (190°C).",
-      "Fill tortillas with cheese and roll them up.",
-      "Place in baking dish, cover with enchilada sauce and bake 20 min."
+      "Fill tortillas with cheese.",
+      "Place in baking dish and cover with enchilada sauce.",
+      "Bake at 350°F for 20 minutes."
     ],
     tags: ["vegetarian"]
   },
   {
     id: 7,
     name: "Chicken Noodle Soup",
-    description: "Classic comforting chicken noodle soup.",
-    ingredients: ["chicken", "carrot", "celery", "noodles", "chicken broth"],
+    description: "Comforting soup with chicken, noodles, and veggies.",
+    ingredients: ["chicken", "noodles", "carrot", "celery", "broth"],
     steps: [
-      "Boil chicken in broth until cooked.",
-      "Add vegetables and noodles, cook until tender.",
-      "Season with salt and pepper."
+      "Boil chicken in broth.",
+      "Add vegetables and noodles.",
+      "Simmer until cooked."
     ],
     tags: ["high-protein"]
   },
   {
     id: 8,
     name: "Mediterranean Salad",
-    description: "Fresh salad with cucumbers, tomatoes, and chickpeas.",
-    ingredients: ["cucumber", "tomato", "chickpeas", "olive oil", "lemon juice"],
+    description: "Fresh salad with greens, veggies, and olive oil.",
+    ingredients: ["lettuce", "cucumber", "tomatoes", "olive oil", "lemon juice"],
     steps: [
-      "Chop all vegetables and combine in a bowl.",
-      "Add chickpeas, olive oil, lemon juice, salt, and pepper.",
-      "Toss and serve chilled."
-    ],
-    tags: ["vegan", "gluten-free"]
-  },
-  {
-    id: 9,
-    name: "Vegetarian Quesadilla",
-    description: "Cheesy quesadilla with vegetables.",
-    ingredients: ["tortilla", "cheese", "bell pepper", "onion"],
-    steps: [
-      "Place cheese and vegetables on tortilla.",
-      "Fold in half and cook on a pan until golden.",
-      "Cut into wedges and serve."
-    ],
-    tags: ["vegetarian"]
-  },
-  {
-    id: 10,
-    name: "Vegan Curry",
-    description: "Rich and creamy vegan curry with coconut milk.",
-    ingredients: ["coconut milk", "chickpeas", "spinach", "curry powder", "onion"],
-    steps: [
-      "Sauté onion and curry powder in oil.",
-      "Add coconut milk and chickpeas, simmer 10 minutes.",
-      "Add spinach and cook until wilted."
+      "Chop all vegetables.",
+      "Mix with olive oil and lemon juice.",
+      "Serve chilled."
     ],
     tags: ["vegan", "gluten-free"]
   }
@@ -125,8 +101,9 @@ const recipes = [
 
 // -------------------- State --------------------
 let favoriteIds = [];
+let userHistory = { viewed: [], favorites: [] };
 let dietaryFilters = [];
-let currentTab = "tab-all";
+let userIngredients = [];
 
 // -------------------- Element References --------------------
 const tabs = document.querySelectorAll(".tab-button");
@@ -135,158 +112,112 @@ const favoritesListEl = document.getElementById("favorites-list");
 const favoritesEmptyMessageEl = document.getElementById("favorites-empty-message");
 const recommendationsListEl = document.getElementById("recommendations-list");
 const noResultsEl = document.getElementById("no-results");
-const noRecommendationsEl = document.getElementById("no-recommendations");
 const weeklyPlanEl = document.getElementById("weekly-plan");
 const weeklyPlanEmptyEl = document.getElementById("weekly-plan-empty");
 const planDaysEl = document.getElementById("plan-days");
-const dietaryCheckboxes = document.querySelectorAll("#dietary-filters input[type='checkbox']");
-const clearFiltersBtn = document.getElementById("clear-filters");
+
+// Ingredient input (make sure you have these in index.html)
+const ingredientInputEl = document.getElementById("ingredient-input");
+const addIngredientBtn = document.getElementById("add-ingredient-btn");
 
 // -------------------- Functions --------------------
-function renderRecipes(arr, container) {
-  container.innerHTML = "";
-  if (arr.length === 0) return false;
 
-  arr.forEach(recipe => {
-    const card = document.createElement("div");
-    card.className = "recipe-card";
-    card.innerHTML = `
-      <div class="recipe-header">
-        <h3>${recipe.name}</h3>
-        <button class="favorite-button ${favoriteIds.includes(recipe.id) ? 'favorited' : ''}" data-id="${recipe.id}">
-          ${favoriteIds.includes(recipe.id) ? '★' : '☆'}
-        </button>
-      </div>
-      <p>${recipe.description}</p>
-    `;
-
-    card.addEventListener("click", (e) => {
-      if (!e.target.classList.contains("favorite-button")) {
-        showDetail(recipe.id);
-      }
-    });
-
-    container.appendChild(card);
-  });
-
-  return true;
-}
-
-function showDetail(id) {
-  const recipe = recipes.find(r => r.id === id);
-  if (!recipe) return;
-
-  document.getElementById("detail-title").textContent = recipe.name;
-  document.getElementById("detail-ingredients").innerHTML = recipe.ingredients.map(i => `<li>${i}</li>`).join("");
-  document.getElementById("detail-steps").innerHTML = recipe.steps.map(s => `<li>${s}</li>`).join("");
-
-  document.getElementById("recipe-detail-section").style.display = "block";
-  document.getElementById(currentTab).style.display = "none";
-}
-
-function toggleFavorite(id) {
-  if (favoriteIds.includes(id)) {
-    favoriteIds = favoriteIds.filter(f => f !== id);
-  } else {
-    favoriteIds.push(id);
-  }
-  renderAll();
-}
-
-function filterByDietary(arr) {
-  if (dietaryFilters.length === 0) return arr;
-  return arr.filter(recipe => dietaryFilters.every(tag => recipe.tags.includes(tag)));
-}
-
-function generateWeeklyPlan() {
-  const favorites = recipes.filter(r => favoriteIds.includes(r.id));
-  const days = parseInt(planDaysEl.value);
-
-  weeklyPlanEl.innerHTML = "";
-  if (favorites.length === 0) {
-    weeklyPlanEmptyEl.style.display = "block";
+// Filter recipes based on user ingredients
+function filterRecipesByIngredients() {
+  if (userIngredients.length === 0) {
+    recipesListEl.innerHTML = '<p class="muted">Add ingredients to see matching recipes.</p>';
     return;
   }
 
-  weeklyPlanEmptyEl.style.display = "none";
+  const matchingRecipes = recipes.filter(recipe => {
+    const matchCount = recipe.ingredients.filter(ing =>
+      userIngredients.includes(ing.toLowerCase())
+    ).length;
+    return matchCount >= Math.ceil(recipe.ingredients.length / 2); // 50% match rule
+  });
 
-  for (let i = 0; i < days; i++) {
-    const recipe = favorites[i % favorites.length];
-    const card = document.createElement("div");
-    card.className = "plan-card";
-    card.innerHTML = `<h4>Day ${i + 1}: ${recipe.name}</h4>`;
-    weeklyPlanEl.appendChild(card);
+  if (matchingRecipes.length === 0) {
+    recipesListEl.innerHTML = '<p class="muted">No recipes match your ingredients.</p>';
+    return;
   }
+
+  recipesListEl.innerHTML = matchingRecipes.map(recipe => `
+    <div class="recipe-card" data-id="${recipe.id}">
+      <div class="recipe-header">
+        <h3>${recipe.name}</h3>
+        <button class="favorite-button ${favoriteIds.includes(recipe.id) ? 'favorited' : ''}">☆</button>
+      </div>
+      <p>${recipe.description}</p>
+    </div>
+  `).join('');
+
+  attachRecipeCardListeners();
 }
 
-function renderRecommendations() {
-  const recommended = recipes.filter(r => !favoriteIds.includes(r.id));
-  recommendationsListEl.innerHTML = "";
-
-  if (recommended.length === 0) {
-    noRecommendationsEl.style.display = "block";
-  } else {
-    noRecommendationsEl.style.display = "none";
-    renderRecipes(recommended, recommendationsListEl);
-  }
+// Attach click events for recipe cards and favorite buttons
+function attachRecipeCardListeners() {
+  const cards = document.querySelectorAll(".recipe-card");
+  cards.forEach(card => {
+    card.addEventListener("click", (e) => {
+      if (e.target.classList.contains("favorite-button")) {
+        toggleFavorite(Number(card.dataset.id));
+        e.stopPropagation();
+      } else {
+        showRecipeDetail(Number(card.dataset.id));
+      }
+    });
+  });
 }
 
-function renderAll() {
-  const filtered = filterByDietary(recipes);
-  const hasRecipes = renderRecipes(filtered, recipesListEl);
-  noResultsEl.style.display = hasRecipes ? "none" : "block";
-
-  const favs = recipes.filter(r => favoriteIds.includes(r.id));
-  if (favs.length === 0) {
-    favoritesEmptyMessageEl.style.display = "block";
-    favoritesListEl.innerHTML = "";
+// Toggle favorite
+function toggleFavorite(id) {
+  if (favoriteIds.includes(id)) {
+    favoriteIds = favoriteIds.filter(fid => fid !== id);
   } else {
-    favoritesEmptyMessageEl.style.display = "none";
-    renderRecipes(favs, favoritesListEl);
+    favoriteIds.push(id);
   }
+  filterRecipesByIngredients();
+}
 
-  renderRecommendations();
+// Show recipe details
+function showRecipeDetail(id) {
+  const recipe = recipes.find(r => r.id === id);
+  document.getElementById("detail-title").textContent = recipe.name;
+  document.getElementById("detail-ingredients").innerHTML = recipe.ingredients.map(i => `<li>${i}</li>`).join('');
+  document.getElementById("detail-steps").innerHTML = recipe.steps.map(s => `<li>${s}</li>`).join('');
+  document.getElementById("recipe-detail-section").style.display = "block";
+  document.getElementById("tab-all").style.display = "none";
 }
 
 // -------------------- Event Listeners --------------------
-tabs.forEach(tab => {
-  tab.addEventListener("click", () => {
-    document.getElementById(currentTab).style.display = "none";
-    tabs.forEach(t => t.classList.remove("active"));
-    tab.classList.add("active");
-    currentTab = tab.dataset.tab;
-    document.getElementById(currentTab).style.display = "block";
-  });
-});
 
-document.addEventListener("click", e => {
-  if (e.target.classList.contains("favorite-button")) {
-    const id = parseInt(e.target.dataset.id);
-    toggleFavorite(id);
+// Ingredient add button
+addIngredientBtn.addEventListener("click", () => {
+  const val = ingredientInputEl.value.trim().toLowerCase();
+  if (val && !userIngredients.includes(val)) {
+    userIngredients.push(val);
+    ingredientInputEl.value = "";
+    filterRecipesByIngredients();
   }
 });
 
-dietaryCheckboxes.forEach(cb => {
-  cb.addEventListener("change", () => {
-    dietaryFilters = Array.from(dietaryCheckboxes).filter(i => i.checked).map(i => i.value);
-    renderAll();
+// Tab navigation
+tabs.forEach(tab => {
+  tab.addEventListener("click", () => {
+    document.querySelectorAll(".tab-section").forEach(sec => sec.style.display = "none");
+    document.querySelectorAll(".tab-button").forEach(btn => btn.classList.remove("active"));
+
+    const tabId = tab.dataset.tab;
+    document.getElementById(tabId).style.display = "block";
+    tab.classList.add("active");
   });
 });
 
-clearFiltersBtn.addEventListener("click", () => {
-  dietaryCheckboxes.forEach(cb => cb.checked = false);
-  dietaryFilters = [];
-  renderAll();
-});
-
-document.getElementById("generate-plan").addEventListener("click", generateWeeklyPlan);
-
-document.getElementById("refresh-recommendations").addEventListener("click", renderAll);
-
+// Back from detail
 document.getElementById("back-to-list").addEventListener("click", () => {
   document.getElementById("recipe-detail-section").style.display = "none";
-  document.getElementById(currentTab).style.display = "block";
+  document.getElementById("tab-all").style.display = "block";
 });
 
-// -------------------- Initial Render --------------------
-renderAll();
+// Initialize
+filterRecipesByIngredients();
