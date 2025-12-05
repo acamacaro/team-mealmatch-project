@@ -1,49 +1,74 @@
-/* General Page Styles */
+/* -------------------- General -------------------- */
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   padding: 0;
-  background: #f7f7f7;
+  background-color: #f7f5f2;
+  color: #333;
 }
 
 header {
   background: #ff8a5c;
   color: white;
-  padding: 1rem 2rem;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
+header h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+header p {
+  margin: 0.5rem 0 0;
+  font-size: 1.1rem;
+  font-weight: 300;
+}
+
+/* -------------------- Main Sections -------------------- */
 main {
-  padding: 1rem 2rem;
   display: flex;
-  gap: 2rem;
   flex-wrap: wrap;
+  gap: 2rem;
+  padding: 2rem;
+  justify-content: center;
 }
 
 section {
-  background: white;
-  padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  padding: 1.5rem;
   flex: 1 1 300px;
+  max-width: 350px;
+  transition: transform 0.2s;
+}
+
+section:hover {
+  transform: translateY(-3px);
 }
 
 h2 {
   margin-top: 0;
+  border-bottom: 2px solid #ff8a5c;
+  padding-bottom: 0.5rem;
 }
 
-/* Recipe Cards */
+/* -------------------- Recipe Cards -------------------- */
 .recipe-card {
   border: 1px solid #ddd;
-  border-radius: 6px;
-  padding: 0.75rem;
-  margin-bottom: 0.75rem;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background: #fff8f5;
   cursor: pointer;
-  transition: transform 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .recipe-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 .recipe-header {
@@ -52,11 +77,29 @@ h2 {
   align-items: center;
 }
 
+.recipe-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #ff5c2c;
+}
+
+.recipe-card p {
+  margin: 0.5rem 0 0;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+/* -------------------- Favorite Button -------------------- */
 .favorite-button {
   border: none;
   background: none;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   cursor: pointer;
+  transition: color 0.2s;
+}
+
+.favorite-button:hover {
+  color: #ff5c2c;
 }
 
 .favorite-button.favorited {
@@ -64,99 +107,40 @@ h2 {
   font-weight: bold;
 }
 
-/* Recommended Section */
-#recommendations-section {
-  background: #fff9f0;
-  border: 1px solid #ffb100;
-}
-
-#recommendations-section h2 {
-  color: #ff8a5c;
-}
-
-/* Recipe Detail Modal / View */
-#recipe-detail {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 90%;
-  max-width: 500px;
-  background: white;
-  border-radius: 10px;
-  padding: 1.5rem;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-  z-index: 1000;
-  display: none; /* Hidden by default */
-}
-
-#recipe-detail h3 {
-  margin-top: 0;
-}
-
-#recipe-detail ol {
-  padding-left: 1.5rem;
-}
-
-#recipe-detail button {
-  margin-top: 1rem;
-  padding: 0.5rem 1rem;
-  background: #ff8a5c;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-#recipe-detail button:hover {
-  background: #ff6f3c;
-}
-
-/* Overlay when detail view is open */
-#overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.4);
-  z-index: 900;
-  display: none;
-}
+/* -------------------- Detail View -------------------- */
 #recipe-detail-section {
-  display: none;
-  background: white;
-  padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
-  flex: 1 1 100%;
+  background: #fffdf9;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
 #recipe-detail-section h2 {
-  margin-top: 0;
+  color: #ff5c2c;
 }
 
-#recipe-detail-section ul {
-  padding-left: 1.5rem;
-  margin-bottom: 1rem;
+#recipe-detail-section h3 {
+  margin: 1rem 0 0.5rem;
+  color: #ff8a5c;
 }
 
+#recipe-detail-section ul,
 #recipe-detail-section ol {
-  padding-left: 1.5rem;
-  margin-bottom: 1rem;
+  padding-left: 1.2rem;
 }
 
-#back-to-list {
-  margin-top: 1rem;
-  padding: 0.5rem 1rem;
-  background-color: #ff8a5c;
+#recipe-detail-section button {
+  background: #ff8a5c;
   color: white;
   border: none;
+  padding: 0.5rem 1rem;
+  margin-bottom: 1rem;
   border-radius: 6px;
   cursor: pointer;
+  font-size: 0.95rem;
+  transition: background 0.2s;
 }
 
-#back-to-list:hover {
-  background-color: #ff7043;
+#recipe-detail-section button:hover {
+  background: #ff5c2c;
 }
-
