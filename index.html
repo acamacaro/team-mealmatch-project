@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Recipes</title>
-  <link rel="stylesheet" href="styles.css"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MealMatch</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
   <header>
-    <h1></h1>
-    <p></p>
+    <h1>MealMatch</h1>
+    <p>Find recipes and save your favorites</p>
   </header>
 
   <nav class="tabs">
@@ -23,60 +24,37 @@
     <!-- All Recipes -->
     <section id="tab-all" class="tab-section">
       <h2>All Recipes</h2>
-      <div id="dietary-filters">
-        <label><input type="checkbox" value="vegan"> Vegan</label>
-        <label><input type="checkbox" value="vegetarian"> Vegetarian</label>
-        <label><input type="checkbox" value="gluten-free"> Gluten-Free</label>
-        <label><input type="checkbox" value="dairy-free"> Dairy-Free</label>
-        <button id="clear-filters" class="btn">Clear Filters</button>
-      </div>
-      <div id="recipes-list"></div>
+      <div id="recipes-list" class="recipes-grid"></div>
     </section>
 
     <!-- Favorites -->
     <section id="tab-favorites" class="tab-section" style="display:none;">
-      <h2>Favorites</h2>
-      <p id="favorites-empty-message">No favorites yet.</p>
-      <div id="favorites-list"></div>
+      <h2>Favorite Recipes</h2>
+      <p id="favorites-empty-message">No favorites yet. Click a star to save one!</p>
+      <div id="favorites-list" class="recipes-grid"></div>
     </section>
 
     <!-- Recommended -->
     <section id="tab-recommended" class="tab-section" style="display:none;">
       <h2>Recommended for You</h2>
-      <button id="refresh-recommendations" class="btn">Refresh</button>
-      <div id="recommendations-list"></div>
+      <div id="recommendations-list" class="recipes-grid"></div>
     </section>
 
     <!-- Weekly Plan -->
     <section id="tab-weekly" class="tab-section" style="display:none;">
       <h2>Weekly Meal Plan</h2>
-      <label>
-        Days:
-        <select id="plan-days">
-          <option value="5">5</option>
-          <option value="7">7</option>
-        </select>
-      </label>
-      <button id="generate-plan" class="btn">Generate</button>
-      <div id="weekly-plan"></div>
-      <p id="weekly-plan-empty" style="display:none;">Not enough recipes to build a plan.</p>
+      <p>Coming soon...</p>
     </section>
 
-    <!-- Detail View -->
-    <section id="recipe-detail-section" class="detail-section" style="display:none;">
-      <button id="back-to-list" class="btn back">← Back</button>
+    <!-- Recipe Detail -->
+    <section id="recipe-detail-section" style="display:none;">
+      <button id="back-to-list" class="btn back">← Back to Recipes</button>
       <h2 id="detail-title"></h2>
-      <div id="detail-meta"></div>
-      <h3>Ingredients</h3>
       <ul id="detail-ingredients"></ul>
-      <h3>Steps</h3>
       <ol id="detail-steps"></ol>
+      <button id="favorite-toggle" class="btn">Save to Favorites</button>
     </section>
   </main>
-
-  <footer>
-    <p></p>
-  </footer>
 
   <script src="app.js"></script>
 </body>
