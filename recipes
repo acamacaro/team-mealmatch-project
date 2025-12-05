@@ -1,0 +1,55 @@
+# Recipe Finder With Partial Match Support
+
+recipes = {
+    # Original recipes
+    "Pancakes": {"flour", "milk", "eggs"},
+    "Scrambled Eggs": {"eggs", "butter", "salt"},
+    "Grilled Cheese": {"bread", "cheese", "butter"},
+    "Tomato Pasta": {"pasta", "tomato sauce", "salt"},
+    "Salad": {"lettuce", "tomato", "cucumber"},
+
+    # New recipes
+    "Omelette": {"eggs", "cheese", "salt", "pepper"},
+    "French Toast": {"bread", "eggs", "milk", "cinnamon"},
+    "Chicken Soup": {"chicken", "carrots", "celery", "salt"},
+    "Fruit Smoothie": {"banana", "strawberry", "milk"},
+    "Tuna Sandwich": {"bread", "tuna", "mayonnaise"},
+    "Garlic Bread": {"bread", "butter", "garlic"},
+    "Quesadilla": {"tortilla", "cheese", "butter"},
+    "Veggie Stir Fry": {"carrot", "broccoli", "soy sauce", "oil"},
+    "Chocolate Cake": {"flour", "sugar", "eggs", "cocoa powder", "butter"},
+    "Pizza": {"dough", "cheese", "tomato sauce"},
+}
+
+# Get user ingredients
+user_input = input("Enter your ingredients (comma separated): ")
+ingredients = {item.strip().lower() for item in user_input.split(",")}
+
+print("\n--------- Exact Matches ---------")
+exact_found = False
+
+for recipe, required in recipes.items():
+    if required.issubset(ingredients):
+        print(f" {recipe}")
+        exact_found = True
+
+if not exact_found:
+    print(" No exact matches.")
+
+print("\n-------- Partial Matches --------")
+
+partial_found = False
+
+for recipe, required in recipes.items():
+    missing = required - ingredients  # ingredients you don’t have
+    have = required & ingredients     # ingredients you do have
+
+    if 0 < len(have) < len(required):  # only show if at least 1 ingredient matches
+        partial_found = True
+        print(f"\n {recipe}")
+        print(f" You have: {', '.join(have)}")
+        print(f" Missing: {', '.join(missing)}")
+
+if not partial_found:
+    print("No partial matches either — try adding more ingredients!")
+
