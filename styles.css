@@ -1,14 +1,29 @@
 /* -------------------- General -------------------- */
+:root {
+  --bg: #f7f5f2;
+  --text: #333;
+  --muted: #666;
+  --accent: #ff8a5c;
+  --accent-strong: #ff5c2c;
+  --card: #fff;
+  --card-soft: #fff8f5;
+  --cream: #fffdf9;
+  --gold: #ffb100;
+  --border: #ddd;
+}
+
+* { box-sizing: border-box; }
+
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f7f5f2;
-  color: #333;
+  background-color: var(--bg);
+  color: var(--text);
 }
 
 header {
-  background: #ff8a5c;
+  background: var(--accent);
   color: white;
   padding: 2rem;
   text-align: center;
@@ -26,42 +41,85 @@ header p {
   font-weight: 300;
 }
 
+/* -------------------- Tabs -------------------- */
+nav.tabs {
+  display: flex;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  flex-wrap: wrap;
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+}
+
+.tab-button {
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--text);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tab-button:hover { background: var(--card-soft); }
+
+.tab-button.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
 /* -------------------- Main Sections -------------------- */
 main {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 2rem;
   padding: 2rem;
   justify-content: center;
 }
 
-section {
-  background: #fff;
+.tab-section,
+.detail-section {
+  background: var(--card);
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.08);
   padding: 1.5rem;
-  flex: 1 1 300px;
-  max-width: 350px;
   transition: transform 0.2s;
 }
 
-section:hover {
-  transform: translateY(-3px);
-}
+.tab-section:hover { transform: translateY(-3px); }
 
 h2 {
   margin-top: 0;
-  border-bottom: 2px solid #ff8a5c;
+  border-bottom: 2px solid var(--accent);
   padding-bottom: 0.5rem;
 }
 
+.muted { color: var(--muted); }
+
+/* -------------------- Buttons -------------------- */
+.btn {
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.btn:hover { background: var(--accent-strong); }
+.btn:active { transform: translateY(1px); }
+.btn.back { margin-bottom: 1rem; }
+
 /* -------------------- Recipe Cards -------------------- */
 .recipe-card {
-  border: 1px solid #ddd;
+  border: 1px solid var(--border);
   border-radius: 8px;
   padding: 1rem;
   margin-bottom: 1rem;
-  background: #fff8f5;
+  background: var(--card-soft);
   cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s;
 }
@@ -80,7 +138,7 @@ h2 {
 .recipe-header h3 {
   margin: 0;
   font-size: 1.1rem;
-  color: #ff5c2c;
+  color: var(--accent-strong);
 }
 
 .recipe-card p {
@@ -98,49 +156,67 @@ h2 {
   transition: color 0.2s;
 }
 
-.favorite-button:hover {
-  color: #ff5c2c;
-}
+.favorite-button:hover { color: var(--accent-strong); }
 
 .favorite-button.favorited {
-  color: #ffb100;
+  color: var(--gold);
   font-weight: bold;
 }
 
 /* -------------------- Detail View -------------------- */
-#recipe-detail-section {
-  background: #fffdf9;
-  padding: 1.5rem;
-  border-radius: 10px;
+.detail-section {
+  background: var(--cream);
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
-#recipe-detail-section h2 {
-  color: #ff5c2c;
-}
+.detail-section h2 { color: var(--accent-strong); }
 
-#recipe-detail-section h3 {
+.detail-section h3 {
   margin: 1rem 0 0.5rem;
-  color: #ff8a5c;
+  color: var(--accent);
 }
 
-#recipe-detail-section ul,
-#recipe-detail-section ol {
+.detail-section ul,
+.detail-section ol {
   padding-left: 1.2rem;
+  line-height: 1.6;
 }
 
-#recipe-detail-section button {
-  background: #ff8a5c;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
+/* -------------------- Plan Layout -------------------- */
+.plan-actions,
+.recommendation-actions {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
   margin-bottom: 1rem;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 0.95rem;
-  transition: background 0.2s;
 }
 
-#recipe-detail-section button:hover {
-  background: #ff5c2c;
+.inline {
+  display: inline-flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+#weekly-plan {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.plan-card {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+  background: #fff;
+}
+
+.plan-card h4 {
+  margin: 0 0 0.5rem 0;
+  color: var(--accent-strong);
+}
+
+/* -------------------- Footer -------------------- */
+footer {
+  padding: 1rem 2rem;
+  text-align: center;
 }
