@@ -200,12 +200,6 @@ function showRecipeDetail(recipeId) {
 }
 
 // -------------------- Recommendations --------------------
-function getRecommendations() {
-  const interactedIds = [...new Set([...userHistory.viewed, ...userHistory.favorites])];
-  const recommended = recipes.filter(r => !interactedIds.includes(r.id));
-  return recommended.slice(0, 5);
-}
-
 function renderRecommendations() {
   recommendationsListEl.innerHTML = "";
 
