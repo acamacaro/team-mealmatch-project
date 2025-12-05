@@ -42,7 +42,7 @@ const recipes = [
 // -------------------- State --------------------
 let favoriteIds = [];
 let dietaryFilters = [];
-let lastSelectedTab = "tab-all";
+let currentTab = "tab-all";
 
 // -------------------- Element References --------------------
 const tabs = document.querySelectorAll(".tab-button");
@@ -56,48 +56,53 @@ const weeklyPlanEl = document.getElementById("weekly-plan");
 const weeklyPlanEmptyEl = document.getElementById("weekly-plan-empty");
 const planDaysEl = document.getElementById("plan-days");
 
-// Dietary filter checkboxes
+// Dietary filters
 const dietaryCheckboxes = document.querySelectorAll("#dietary-filters input[type='checkbox']");
 const clearFiltersBtn = document.getElementById("clear-filters");
 
-// -------------------- Helper Functions --------------------
+// -------------------- Functions --------------------
 
-// Render recipes to a container
-function renderRecipes(recipesArr, container) {
+// Render recipes in a container
+function renderRecipes(arr, container) {
   container.innerHTML = "";
-  if (recipesArr.length === 0) return false;
-  
-  recipesArr.forEach(recipe => {
+  if (arr.length === 0) return false;
+
+  arr.forEach(recipe => {
     const card = document.createElement("div");
     card.className = "recipe-card";
     card.innerHTML = `
       <div class="recipe-header">
         <h3>${recipe.name}</h3>
-        <button class="favorite-button ${favoriteIds.includes(recipe.id) ? 'favorited' : ''}" data-id="${recipe.id}">${favoriteIds.includes(recipe.id) ? '★' : '☆'}</button>
+        <button class="favorite-button ${favoriteIds.includes(recipe.id) ? 'favorited' : ''}" data-id="${recipe.id}">
+          ${favoriteIds.includes(recipe.id) ? '★' : '☆'}
+        </button>
       </div>
       <p>${recipe.description}</p>
     `;
+
     card.addEventListener("click", (e) => {
       if (!e.target.classList.contains("favorite-button")) {
-        showRecipeDetail(recipe.id);
+        showDetail(recipe.id);
       }
     });
+
     container.appendChild(card);
   });
+
   return true;
 }
 
 // Show recipe detail
-function showRecipeDetail(id) {
+function showDetail(id) {
   const recipe = recipes.find(r => r.id === id);
   if (!recipe) return;
 
   document.getElementById("detail-title").textContent = recipe.name;
   document.getElementById("detail-ingredients").innerHTML = recipe.ingredients.map(i => `<li>${i}</li>`).join("");
   document.getElementById("detail-steps").innerHTML = recipe.steps.map(s => `<li>${s}</li>`).join("");
-  
+
   document.getElementById("recipe-detail-section").style.display = "block";
-  document.getElementById(lastSelectedTab).style.display = "none";
+  document.getElementById(currentTab).style.display = "none";
 }
 
 // Toggle favorite
@@ -110,54 +115,26 @@ function toggleFavorite(id) {
   renderAll();
 }
 
-// Filter recipes by dietary tags
-function filterByDietary(recipesArr) {
-  if (dietaryFilters.length === 0) return recipesArr;
-  return recipesArr.filter(recipe => dietaryFilters.every(tag => recipe.tags.includes(tag)));
+// Apply dietary filters
+function filterByDietary(arr) {
+  if (dietaryFilters.length === 0) return arr;
+  return arr.filter(recipe => dietaryFilters.every(tag => recipe.tags.includes(tag)));
 }
 
-// Render all sections
-function renderAll() {
-  const filteredRecipes = filterByDietary(recipes);
-  const hasRecipes = renderRecipes(filteredRecipes, recipesListEl);
-  noResultsEl.style.display = hasRecipes ? "none" : "block";
-
-  // Favorites
-  const favoriteRecipes = recipes.filter(r => favoriteIds.includes(r.id));
-  if (favoriteRecipes.length === 0) {
-    favoritesEmptyMessageEl.style.display = "block";
-    favoritesListEl.innerHTML = "";
-  } else {
-    favoritesEmptyMessageEl.style.display = "none";
-    renderRecipes(favoriteRecipes, favoritesListEl);
-  }
-
-  // Recommendations: simple logic = recipes not favorited
-  const recommendedRecipes = recipes.filter(r => !favoriteIds.includes(r.id));
-  recommendationsListEl.innerHTML = "";
-  if (recommendedRecipes.length === 0) {
-    noRecommendationsEl.style.display = "block";
-  } else {
-    noRecommendationsEl.style.display = "none";
-    renderRecipes(recommendedRecipes, recommendationsListEl);
-  }
-}
-
-// Generate Weekly Plan
+// Render weekly plan
 function generateWeeklyPlan() {
   const favorites = recipes.filter(r => favoriteIds.includes(r.id));
-  const totalDays = parseInt(planDaysEl.value);
+  const days = parseInt(planDaysEl.value);
 
+  weeklyPlanEl.innerHTML = "";
   if (favorites.length === 0) {
-    weeklyPlanEl.innerHTML = "";
     weeklyPlanEmptyEl.style.display = "block";
     return;
   }
 
   weeklyPlanEmptyEl.style.display = "none";
-  weeklyPlanEl.innerHTML = "";
 
-  for (let i = 0; i < totalDays; i++) {
+  for (let i = 0; i < days; i++) {
     const recipe = favorites[i % favorites.length];
     const card = document.createElement("div");
     card.className = "plan-card";
@@ -166,20 +143,51 @@ function generateWeeklyPlan() {
   }
 }
 
+// Render recommendations (non-favorites)
+function renderRecommendations() {
+  const recommended = recipes.filter(r => !favoriteIds.includes(r.id));
+  recommendationsListEl.innerHTML = "";
+
+  if (recommended.length === 0) {
+    noRecommendationsEl.style.display = "block";
+  } else {
+    noRecommendationsEl.style.display = "none";
+    renderRecipes(recommended, recommendationsListEl);
+  }
+}
+
+// Render all sections
+function renderAll() {
+  const filtered = filterByDietary(recipes);
+  const hasRecipes = renderRecipes(filtered, recipesListEl);
+  noResultsEl.style.display = hasRecipes ? "none" : "block";
+
+  const favs = recipes.filter(r => favoriteIds.includes(r.id));
+  if (favs.length === 0) {
+    favoritesEmptyMessageEl.style.display = "block";
+    favoritesListEl.innerHTML = "";
+  } else {
+    favoritesEmptyMessageEl.style.display = "none";
+    renderRecipes(favs, favoritesListEl);
+  }
+
+  renderRecommendations();
+}
+
 // -------------------- Event Listeners --------------------
 
-// Tab switching
+// Tabs
 tabs.forEach(tab => {
   tab.addEventListener("click", () => {
-    document.getElementById(lastSelectedTab).style.display = "none";
+    document.getElementById(currentTab).style.display = "none";
     tabs.forEach(t => t.classList.remove("active"));
     tab.classList.add("active");
-    lastSelectedTab = tab.dataset.tab;
-    document.getElementById(lastSelectedTab).style.display = "block";
+    currentTab = tab.dataset.tab;
+    document.getElementById(currentTab).style.display = "block";
   });
 });
 
-// Favorite button click
+// Favorite button
 document.addEventListener("click", e => {
   if (e.target.classList.contains("favorite-button")) {
     const id = parseInt(e.target.dataset.id);
@@ -202,16 +210,16 @@ clearFiltersBtn.addEventListener("click", () => {
   renderAll();
 });
 
-// Generate weekly plan
+// Weekly plan
 document.getElementById("generate-plan").addEventListener("click", generateWeeklyPlan);
 
 // Refresh recommendations
 document.getElementById("refresh-recommendations").addEventListener("click", renderAll);
 
-// Back button from detail
+// Back from detail
 document.getElementById("back-to-list").addEventListener("click", () => {
   document.getElementById("recipe-detail-section").style.display = "none";
-  document.getElementById(lastSelectedTab).style.display = "block";
+  document.getElementById(currentTab).style.display = "block";
 });
 
 // -------------------- Initial Render --------------------
