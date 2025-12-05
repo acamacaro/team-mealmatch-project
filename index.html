@@ -12,7 +12,7 @@
     <p>Simple, good-looking recipes with favorites, recommendations, and a weekly plan.</p>
   </header>
 
-  <nav class="tabs">
+  <nav class="tabs" aria-label="Primary">
     <button class="tab-button active" data-tab="tab-all">All Recipes</button>
     <button class="tab-button" data-tab="tab-favorites">Favorites</button>
     <button class="tab-button" data-tab="tab-recommended">Recommended for You</button>
@@ -21,8 +21,8 @@
 
   <main>
     <!-- All Recipes -->
-    <section id="tab-all" class="tab-section">
-      <h2>All recipes</h2>
+    <section id="tab-all" class="tab-section" aria-labelledby="All Recipes">
+      <h2>All Recipes</h2>
 
       <!-- Dietary Filters -->
       <div id="dietary-filters">
@@ -39,29 +39,34 @@
 
     <!-- Favorites -->
     <section id="tab-favorites" class="tab-section" style="display:none;">
-      <h2>Your favorites</h2>
+      <h2>Your Favorites</h2>
       <p id="favorites-empty-message">No favorites yet. Tap the ☆ to add some.</p>
       <div id="favorites-list"></div>
     </section>
 
     <!-- Recommended -->
     <section id="tab-recommended" class="tab-section" style="display:none;">
-      <h2>Recommended for you</h2>
-      <button id="refresh-recommendations" class="btn">Refresh recommendations</button>
+      <h2>Recommended for You</h2>
+      <div class="recommendation-actions">
+        <button id="refresh-recommendations" class="btn">Refresh Recommendations</button>
+      </div>
       <div id="recommendations-list"></div>
+      <p id="no-recommendations" class="muted" style="display:none;">No recommendations yet. Interact with some recipes first!</p>
     </section>
 
     <!-- Weekly Meal Plan -->
     <section id="tab-weekly" class="tab-section" style="display:none;">
-      <h2>Weekly meal plan</h2>
-      <label>
-        Days:
-        <select id="plan-days">
-          <option value="5">5 (Mon–Fri)</option>
-          <option value="7">7 (Full week)</option>
-        </select>
-      </label>
-      <button id="generate-plan" class="btn">Generate plan</button>
+      <h2>Weekly Meal Plan</h2>
+      <div class="plan-actions">
+        <label class="inline">
+          <span>Days:</span>
+          <select id="plan-days">
+            <option value="5">5 (Mon–Fri)</option>
+            <option value="7">7 (Full Week)</option>
+          </select>
+        </label>
+        <button id="generate-plan" class="btn">Generate Plan</button>
+      </div>
       <div id="weekly-plan"></div>
       <p id="weekly-plan-empty" class="muted" style="display:none;">Not enough recipes to build a full plan. Add more favorites or recipes.</p>
     </section>
@@ -70,7 +75,6 @@
     <section id="recipe-detail-section" class="detail-section" style="display:none;">
       <button id="back-to-list" class="btn back">← Back</button>
       <h2 id="detail-title"></h2>
-
       <div class="detail-meta muted" id="detail-meta"></div>
 
       <h3>Ingredients</h3>
@@ -80,6 +84,10 @@
       <ol id="detail-steps"></ol>
     </section>
   </main>
+
+  <footer>
+    <p>&copy; 2025 MealMatch</p>
+  </footer>
 
   <script src="app.js"></script>
 </body>
