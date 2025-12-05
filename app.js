@@ -26,6 +26,18 @@ let userHistory = {
   favorites: [...favoriteIds]
 };
 
+function getRecommendations() {
+  
+  const interactedIds = [...new Set([...userHistory.viewed, ...userHistory.favorites])];
+
+
+  let recommended = recipes.filter(r => !interactedIds.includes(r.id));
+
+
+  if (recommended.length === 0) return [];
+  return recommended.slice(0, 5);
+}
+
 // Get references to the HTML elements
 const recipesListEl = document.getElementById("recipes-list");
 const favoritesListEl = document.getElementById("favorites-list");
@@ -115,7 +127,48 @@ function renderFavorites() {
     card.appendChild(desc);
     favoritesListEl.appendChild(card);
   });
+  
 }
+
+function renderRecommendations() {
+  const recDiv = document.getElementById("recommendations-list");
+  recDiv.innerHTML = "";
+
+  const recs = getRecommendations();
+  if (recs.length === 0) {
+    recDiv.textContent = "No recommendations yet.";
+    return;
+  }
+
+  recs.forEach(r => {
+    const card = document.createElement("div");
+    card.className = "recipe-card";
+
+    const header = document.createElement("div");
+    header.className = "recipe-header";
+
+    const title = document.createElement("h3");
+    title.textContent = r.name;
+
+    header.appendChild(title);
+
+    const desc = document.createElement("p");
+    desc.textContent = r.description;
+
+    card.appendChild(header);
+    card.appendChild(desc);
+    recDiv.appendChild(card);
+
+    // Track that this recipe was viewed
+    card.addEventListener("click", () => {
+      if (!userHistory.viewed.includes(r.id)) {
+        userHistory.viewed.push(r.id);
+        renderRecommendations();
+      }
+    });
+  });
+}
+
 
 // Add or remove a recipe from favorites
 function toggleFavorite(recipeId) {
@@ -130,8 +183,12 @@ function toggleFavorite(recipeId) {
   // Re-render both sections
   renderRecipes();
   renderFavorites();
+  renderRecommendations();
+
 }
 
 // Initial render when the page loads
 renderRecipes();
 renderFavorites();
+renderRecommendations();
+
