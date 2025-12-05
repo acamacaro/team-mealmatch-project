@@ -1,13 +1,10 @@
 :root {
   --bg: #f7f5f2;
   --text: #333;
-  --muted: #666;
   --accent: #ff8a5c;
   --accent-strong: #ff5c2c;
   --card: #fff;
   --card-soft: #fff8f5;
-  --cream: #fffdf9;
-  --gold: #ffb100;
   --border: #ddd;
 }
 
@@ -45,106 +42,51 @@ nav.tabs {
   color: #fff;
 }
 
-main { padding: 2rem; }
+main {
+  padding: 2rem;
+}
 
-.tab-section, .detail-section {
+.tab-section {
   background: var(--card);
   border-radius: 10px;
   padding: 1.5rem;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-h2 {
-  margin-top: 0;
-  border-bottom: 2px solid var(--accent);
-  padding-bottom: 0.5rem;
-}
-
 .recipe-card {
+  background: var(--card-soft);
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 1rem;
-  margin-bottom: 1rem;
-  background: var(--card-soft);
   cursor: pointer;
+  transition: 0.2s;
 }
-
-.recipe-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.recipe-header h3 {
-  margin: 0;
-  font-size: 1.1rem;
-  color: var(--accent-strong);
-}
-
-.recipe-card p {
-  margin: 0.5rem 0 0;
-  font-size: 0.95rem;
-  color: var(--muted);
-}
-
-.favorite-button {
-  border: none;
-  background: none;
-  font-size: 1.2rem;
-  cursor: pointer;
-}
-.favorite-button.favorited { color: var(--gold); }
-
-.btn {
+.recipe-card:hover {
   background: var(--accent);
-  color: #fff;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  cursor: pointer;
-}
-.btn.back { margin-bottom: 1rem; }
-
-#dietary-filters {
-  margin-bottom: 1rem;
-}
-#dietary-filters label {
-  margin-right: 1rem;
+  color: white;
 }
 
-.detail-section {
-  background: var(--cream);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-}
-.detail-section h2 { color: var(--accent-strong); }
-.detail-section h3 {
-  margin: 1rem 0 0.5rem;
-  color: var(--accent);
-}
-.detail-section ul,
-.detail-section ol {
-  padding-left: 1.2rem;
-  line-height: 1.6;
-}
-
-#weekly-plan {
+.recipes-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 1rem;
 }
-.plan-card {
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 1rem;
-  background: #fff;
-}
-.plan-card h4 {
-  margin: 0 0 0.5rem 0;
-  color: var(--accent-strong);
+
+.btn.back {
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+  border-radius: 6px;
 }
 
-footer {
-  padding: 1rem 2rem;
-  text-align: center;
+.btn {
+  background: var(--accent-strong);
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+  border-radius: 6px;
+  margin-top: 1rem;
 }
-footer:empty { display: none; }
