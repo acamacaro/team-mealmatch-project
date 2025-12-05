@@ -1,4 +1,4 @@
-/* -------------------- General -------------------- */
+/* -------------------- Variables -------------------- */
 :root {
   --bg: #f7f5f2;
   --text: #333;
@@ -12,13 +12,13 @@
   --border: #ddd;
 }
 
+/* -------------------- General -------------------- */
 * { box-sizing: border-box; }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
   margin: 0;
-  padding: 0;
-  background-color: var(--bg);
+  background: var(--bg);
   color: var(--text);
 }
 
@@ -27,26 +27,17 @@ header {
   color: white;
   padding: 2rem;
   text-align: center;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
-header h1 {
+header h1, header p {
   margin: 0;
-  font-size: 2rem;
-}
-
-header p {
-  margin: 0.5rem 0 0;
-  font-size: 1.1rem;
-  font-weight: 300;
 }
 
 /* -------------------- Tabs -------------------- */
 nav.tabs {
   display: flex;
   gap: 0.5rem;
-  padding: 1rem 2rem;
-  flex-wrap: wrap;
+  padding: 1rem;
   background: #fff;
   border-bottom: 1px solid var(--border);
 }
@@ -54,64 +45,32 @@ nav.tabs {
 .tab-button {
   border: 1px solid var(--border);
   background: #fff;
-  color: var(--text);
   padding: 0.5rem 1rem;
-  border-radius: 8px;
+  border-radius: 6px;
   cursor: pointer;
-  transition: all 0.2s;
 }
-
-.tab-button:hover { background: var(--card-soft); }
-
 .tab-button.active {
   background: var(--accent);
-  border-color: var(--accent);
   color: #fff;
 }
 
-/* -------------------- Main Sections -------------------- */
+/* -------------------- Sections -------------------- */
 main {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 2rem;
   padding: 2rem;
-  justify-content: center;
 }
 
-.tab-section,
-.detail-section {
+.tab-section, .detail-section {
   background: var(--card);
   border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
   padding: 1.5rem;
-  transition: transform 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
-
-.tab-section:hover { transform: translateY(-3px); }
 
 h2 {
   margin-top: 0;
   border-bottom: 2px solid var(--accent);
   padding-bottom: 0.5rem;
 }
-
-.muted { color: var(--muted); }
-
-/* -------------------- Buttons -------------------- */
-.btn {
-  border: none;
-  background: var(--accent);
-  color: #fff;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 0.95rem;
-  transition: background 0.2s, transform 0.1s;
-}
-
-.btn:hover { background: var(--accent-strong); }
-.btn:active { transform: translateY(1px); }
-.btn.back { margin-bottom: 1rem; }
 
 /* -------------------- Recipe Cards -------------------- */
 .recipe-card {
@@ -121,12 +80,6 @@ h2 {
   margin-bottom: 1rem;
   background: var(--card-soft);
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.recipe-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 .recipe-header {
@@ -144,7 +97,7 @@ h2 {
 .recipe-card p {
   margin: 0.5rem 0 0;
   font-size: 0.95rem;
-  color: #555;
+  color: var(--muted);
 }
 
 /* -------------------- Favorite Button -------------------- */
@@ -153,14 +106,27 @@ h2 {
   background: none;
   font-size: 1.2rem;
   cursor: pointer;
-  transition: color 0.2s;
 }
-
 .favorite-button:hover { color: var(--accent-strong); }
+.favorite-button.favorited { color: var(--gold); }
 
-.favorite-button.favorited {
-  color: var(--gold);
-  font-weight: bold;
+/* -------------------- Buttons -------------------- */
+.btn {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.btn.back { margin-bottom: 1rem; }
+
+/* -------------------- Dietary Filters -------------------- */
+#dietary-filters {
+  margin-bottom: 1rem;
+}
+#dietary-filters label {
+  margin-right: 1rem;
 }
 
 /* -------------------- Detail View -------------------- */
@@ -168,14 +134,11 @@ h2 {
   background: var(--cream);
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
-
 .detail-section h2 { color: var(--accent-strong); }
-
 .detail-section h3 {
   margin: 1rem 0 0.5rem;
   color: var(--accent);
 }
-
 .detail-section ul,
 .detail-section ol {
   padding-left: 1.2rem;
@@ -190,26 +153,22 @@ h2 {
   align-items: center;
   margin-bottom: 1rem;
 }
-
 .inline {
   display: inline-flex;
   gap: 0.5rem;
   align-items: center;
 }
-
 #weekly-plan {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 1rem;
 }
-
 .plan-card {
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 1rem;
   background: #fff;
 }
-
 .plan-card h4 {
   margin: 0 0 0.5rem 0;
   color: var(--accent-strong);
@@ -220,3 +179,4 @@ footer {
   padding: 1rem 2rem;
   text-align: center;
 }
+footer:empty { display: none; }
