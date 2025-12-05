@@ -12,6 +12,7 @@
     <p>Simple, good-looking recipes with favorites, recommendations, and a weekly plan.</p>
   </header>
 
+  <!-- Tabs -->
   <nav class="tabs">
     <button class="tab-button active" data-tab="tab-all">All Recipes</button>
     <button class="tab-button" data-tab="tab-favorites">Favorites</button>
@@ -24,11 +25,13 @@
     <section id="tab-all" class="tab-section">
       <h2>All Recipes</h2>
 
-      <!-- Ingredient Input -->
-      <div id="ingredient-controls">
-        <input type="text" id="ingredient-input" placeholder="Type an ingredient you have (e.g., chicken)">
-        <button id="add-ingredient-btn" class="btn small">Add</button>
-        <div id="current-ingredients" class="muted" style="margin-top:0.5rem;">No ingredients added yet.</div>
+      <!-- Ingredient Input Area -->
+      <div id="ingredient-input-area">
+        <input type="text" id="ingredient-input" placeholder="Type an ingredient..." />
+        <button id="add-ingredient" class="btn">Add</button>
+      </div>
+      <div id="current-ingredients">
+        <p>No ingredients added yet.</p>
       </div>
 
       <!-- Dietary Filters -->
@@ -40,7 +43,6 @@
         <button id="clear-filters" class="btn small">Clear</button>
       </div>
 
-      <!-- Recipe List -->
       <div id="recipes-list"></div>
       <p id="no-results" class="muted" style="display:none;">No recipes match your filters or ingredients.</p>
     </section>
